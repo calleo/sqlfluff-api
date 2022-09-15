@@ -7,7 +7,11 @@ def format_res(client):
         [sqlfluff:rules:L010]
         capitalisation_policy = lower
         """
-    request = {"dialect": "ansi", "conf": conf, "sql": "SELECT 1 FROM AWESOME_table\n"}
+    request = {
+        "dialect": "snowflake",
+        "conf": conf,
+        "sql": "SELECT 1 FROM AWESOME_table\n",
+    }
     return client.post("/v1/pretty", json=request)
 
 
@@ -45,3 +49,12 @@ def test_format_lint(format_res):
             "line_pos": 15,
         },
     ]
+
+
+def test_invalid_dialect(client):
+    request = {"dialect": "invalid-dialect", "conf": "", "sql": "\n"}
+    response = client.post("/v1/pretty", json=request)
+    assert response.status_code == 400
+    assert response.get_json() == {
+        "message": "Error: Unknown dialect 'invalid-dialect'"
+    }
