@@ -2,36 +2,18 @@ from flask import Flask, request, abort, jsonify, make_response
 from sqlfluff.api.simple import fix, lint
 import tempfile
 from sqlfluff.core import (
-    SQLBaseError,
     SQLFluffUserError,
 )
-from werkzeug.exceptions import HTTPException
 
 app = Flask(__name__)
 
-from flask import json
 
-
-@app.errorhandler(SQLFluffUserError)
-def handle_exception(exception):
-    response = exception.get_response()
-    response.data = json.dumps(
-        {
-            "code": 400,
-            "name": exception.name,
-            "description": str(exception),
-        }
-    )
-    response.content_type = "application/json"
-    return response
-
-
-@app.route("/")
+@app.route("/api")
 def home():
-    return "Welcome to sqlfluff-api!"
+    return "Welcome to SQL Formatter API!"
 
 
-@app.route("/v1/pretty", methods=["POST"])
+@app.route("/api/v1/pretty", methods=["POST"])
 def format_sql_post():
     body = request.get_json()
 
