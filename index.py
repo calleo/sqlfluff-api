@@ -8,12 +8,12 @@ from sqlfluff.core import (
 app = Flask(__name__)
 
 
-@app.route("/api")
+@app.route("/")
 def home():
     return "Welcome to SQL Formatter API!"
 
 
-@app.route("/api/v1/pretty", methods=["POST"])
+@app.route("/v1/pretty", methods=["POST"])
 def format_sql_post():
     body = request.get_json()
 
