@@ -24,6 +24,10 @@ def test_format_status(format_res):
     assert format_res.status_code == 200
 
 
+def test_format_content_type(format_res):
+    assert format_res.content_type == "application/json"
+
+
 def test_format_sql(format_res):
     assert format_res.get_json()["sql"] == "select 1 from AWESOME_TABLE\n"
 
