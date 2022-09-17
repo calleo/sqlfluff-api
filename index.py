@@ -23,8 +23,8 @@ def format_sql_post():
         conf.write(body["conf"])
         conf.seek(0)
         try:
-            lint_res = lint(body["sql"], config_path=conf.name, dialect=body["dialect"], exclude_rules=["templating"])
-            fixed = fix(body["sql"], config_path=conf.name, dialect=body["dialect"], exclude_rules=["templating"])
+            lint_res = lint(body["sql"], config_path=conf.name, dialect=body["dialect"])
+            fixed = fix(body["sql"], config_path=conf.name, dialect=body["dialect"])
         except SQLFluffUserError as e:
             abort(make_response(jsonify(message=str(e)), 400))
 
