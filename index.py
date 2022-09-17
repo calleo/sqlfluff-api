@@ -13,7 +13,7 @@ def home():
     return "Welcome to SQL Formatter API!"
 
 
-@app.route("/v1/pretty", methods=["POST"])
+@app.route("/v1/format", methods=["POST"])
 def format_sql_post():
     body = request.get_json()
 

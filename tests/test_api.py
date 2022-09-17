@@ -12,7 +12,7 @@ def format_res(client):
         "conf": conf,
         "sql": "SELECT 1 FROM AWESOME_table\n",
     }
-    return client.post("/v1/pretty", json=request)
+    return client.post("/v1/format", json=request)
 
 
 def test_get_root(client):
@@ -57,7 +57,7 @@ def test_format_lint(format_res):
 
 def test_invalid_dialect(client):
     request = {"dialect": "invalid-dialect", "conf": "", "sql": "\n"}
-    response = client.post("/v1/pretty", json=request)
+    response = client.post("/v1/format", json=request)
     assert response.status_code == 400
     assert response.get_json() == {
         "message": "Error: Unknown dialect 'invalid-dialect'"
